@@ -12,20 +12,23 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaXM5NHJlYWwxMyIsImEiOiJja3AyemR5NnMwMDNxMnZwY
 const sampleData = [
     {   
         // Luigi's Pizzeria
-        "location": "3700 Almeda Rd", // , Houston, TX 77004
+        "name": "Luigi's Pizzeria",
+        "location": "3700 Almeda Rd , Houston, TX 77004",
         "city": "Houston",
         "state": "Texas",
         "coordinates" : [ -95.37461311580222,29.735477373862995 ]
     },
     {
         // Winner's Pizza
-        "location": "7239 Fairbanks North Houston Rd", // #4, Houston, TX 77040
+        "name": "Winner's Pizza",
+        "location": "7239 Fairbanks North Houston Rd #4, Houston, TX 77040", 
         "city": "Houston",
         "state": "Texas",
         "coordinates" : [ -95.5252,29.8795 ]
     },
     {
         // Pink's Pizza
+        "name": "Pink's Pizza",
         "location": "1403 Heights Blvd", 
         "city": "Houston",
         "state": "Texas",
@@ -52,11 +55,16 @@ export default class Map extends React.Component{
             zoom: this.state.zoom 
         })
 
-        let marker = new mapboxgl.Marker() // note: luigi's Pizzeria coordinates!
-        .setLngLat([ -95.37461311580222,29.735477373862995 ]) // for now hardcoding to see what is happening
-        .setPopup( new mapboxgl.Popup({ offset: 30 }) 
-        .setHTML('<h4>' + 'Houston' + '</h4>') ) // here we close .setPopup()
-        .addTo(map);
+        sampleData.map( (location) => {
+            
+             let marker = new mapboxgl.Marker() // note: luigi's Pizzeria coordinates!
+                .setLngLat( location.coordinates ) // for now hardcoding to see what is happening
+                .setPopup( new mapboxgl.Popup({ offset: 30 }) 
+                .setHTML('<h2>' + location.name + '</h2>' + '<h4>' + location.city + '</h4>' + location.location) ) // here we close .setPopup()
+                .addTo(map);
+        })
+
+       
     };
 
     render(){
