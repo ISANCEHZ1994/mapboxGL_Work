@@ -1,21 +1,42 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-// import ReactMapGL from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
-// import 'mapbox-gl/dist/mapbox-gl.css';
 
-// mapboxgl
 mapboxgl.accessToken = 'pk.eyJ1IjoiaXM5NHJlYWwxMyIsImEiOiJja3AyemR5NnMwMDNxMnZwYzRqOWZ3YjBtIn0.3_R4gBCcmuHZdEfWYt3LCw';
 
 // sample data of the subway stations in new york
 // array of data
 // items are objects
 // in each object: location, city, state, and coordinates all string values EXCEPT coordinates
+// in this case I want Pizza Places in Houston, TX
 
+const sampleData = [
+    {   
+        // Luigi's Pizzeria
+        "location": "3700 Almeda Rd", // , Houston, TX 77004
+        "city": "Houston",
+        "state": "Texas",
+        "coordinates" : [ -95.37461311580222,29.735477373862995 ]
+    },
+    {
+        // Winner's Pizza
+        "location": "7239 Fairbanks North Houston Rd", // #4, Houston, TX 77040
+        "city": "Houston",
+        "state": "Texas",
+        "coordinates" : [ -95.5252,29.8795 ]
+    },
+    {
+        // Pink's Pizza
+        "location": "1403 Heights Blvd", 
+        "city": "Houston",
+        "state": "Texas",
+        "coordinates" : [ -95.398246, 29.797021520596502  ]
+    }
+]
 
 export default class Map extends React.Component{
     
     state = {
+
         lng: -95.369804,
         lat: 29.760427,
         zoom: 9,
@@ -31,11 +52,11 @@ export default class Map extends React.Component{
             zoom: this.state.zoom 
         })
 
-        // map.fitBounds([ -29.7604, 95.3698 ])
-
-        let marker = new mapboxgl.Marker() // mapboxgl
-        // .setLngLat([-36.2048,138.2529])
-
+        let marker = new mapboxgl.Marker() // note: luigi's Pizzeria coordinates!
+        .setLngLat([ -95.37461311580222,29.735477373862995 ]) // for now hardcoding to see what is happening
+        .setPopup( new mapboxgl.Popup({ offset: 30 }) 
+        .setHTML('<h4>' + 'Houston' + '</h4>') ) // here we close .setPopup()
+        .addTo(map);
     };
 
     render(){
@@ -45,8 +66,6 @@ export default class Map extends React.Component{
 
             <div>
                 <div ref={ el => this.mapContainer = el } style={{width: '100%', height: '100vh'}}> </div>
-                {/* <ReactMapGL {...this.state} /> */}
-
             </div>
 
         );
